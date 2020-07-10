@@ -1,0 +1,44 @@
+-- select id,account_id from orders
+--select "id" from orders LIMIT 10
+--SELECT * from orders order by occurred_at desc limit 100
+---------------
+--select account_id,total_amt_usd from orders order by account_id,total_amt_usd DESC
+--select account_id,total_amt_usd from orders order by total_amt_usd DESC,account_id
+-------------------------------------------
+--select account_id,occurred_at,standard_qty,gloss_qty, poster_qty,
+--gloss_qty+poster_qty as nonstandard_qty
+--from orders limit 10
+-----------------------------
+--select id, account_id,standard_amt_usd/standard_qty 
+--as unit_price from orders limit 10;
+-----------------------------------
+--select *
+--from web_events 
+--where occurred_at like '%2015-10-06 17:13:58%'
+------------------------------------------------------
+--select name from accounts where name like 'A%' limit 100
+--where name like 'C%' limit 100
+--select name from accounts where name like '%one%' limit 100
+--select name from accounts where name like '%s' limit 100
+--------------------------------------------------------------
+--select * from accounts where name in ('Walmart','Apple') 
+--select name,primary_poc,sales_rep_id from accounts 
+--where name in('Walmart','Target','Nordstrom')
+-----------------------------------------------------
+--SELECT * FROM orders 
+--WHERE standard_qty>1000 AND poster_qty=0 AND gloss_qty=0
+--SELECT FROM accounts WHERE name NOT LIKE ('C%') AND name  LIKE ('%s')
+--SELECT occurred_at,gloss_qty FROM orders WHERE gloss_qty BETWEEN 24 AND 29
+--SELECT * FROM web_events
+------------------------------------------------
+--SELECT * FROM accounts,orders
+--SELECT * FROM orders
+--SELECT orders.*,accounts.* FROM orders JOIN accounts on orders.account_id=accounts.id
+--------------------------
+--SELECT accounts.id, orders.account_id,gloss_qty,poster_qty ,gloss_qty+poster_qty  total FROM orders JOIN accounts 
+--on accounts.id=orders.account_id
+--SELECT t1.account_id odr,t2.id accnt 
+--FROM orders AS t1  
+--JOIN accounts AS t2
+----------------------------------
+

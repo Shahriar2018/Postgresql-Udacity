@@ -1,0 +1,54 @@
+--SELECT * FROM orders
+----------------------------------- GRUP BY CONCEPT-----------------------
+-- -- SELECT account_id,
+-- --        SUM(standard_qty) AS standard_sum,
+-- --        SUM(gloss_qty) AS gloss_sum,
+-- --  	   SUM(poster_qty) AS poster_sum
+-- -- 	   FROM orders
+-- -- --WHERE account_id=1001 --comment: The GROUP BY always goes between where and ORDER BY
+-- --  GROUP BY account_id 
+-- --  ORDER BY account_id DESC
+
+-----------------------Group BY Quiz.1---------------
+-- SELECT a.name "Account Name",o.occurred_at "Date of Order"
+-- FROM orders o
+-- JOIN accounts a
+-- ON o.account_id=a.id
+-- --WHERE o.occured_at is MIN (o.occurred_at)
+-- ORDER BY o.occurred_at
+-- LIMIT 1
+-------------------------------------Q.2-------------
+-- SELECT a.name "Account Name",SUM(o.total_amt_usd) "Total Sales"
+-- FROM orders o
+-- JOIN accounts a
+-- ON o.account_id=a.id
+-- WHERE a.name='Boeing' -- Where can be used here only
+-- GROUP BY a.name
+-- ORDER BY a.name 
+---------------------------------- Q.3----------------
+-- SELECT w.occurred_at "MOST RECENT",w.channel "CHANNEL",a.name "Name"
+-- FROM accounts a
+-- JOIN web_events w
+-- ON w.account_id=a.id
+-- ORDER BY w.occurred_at DESC
+-- LIMIT 1
+---------------------------------Q.4(MAXIMUM USED CHANNEL-EXTRA WORK)---------------------------------------------
+-- SELECT W.channel, COUNT(w.channel) "No of Occurence" FROM web_events w
+-- --WHERE w.channel=MAX(w.channel)
+-- GROUP BY w.channel
+-- --ORDER BY "No of Occurence" DESC
+-- --LIMIT 1
+----------- Two ways: Regular and Aggregate way to find maximum total_amt_usd--------------
+------------------------ Regular way way-----------------
+--SELECT account_id,total_amt_usd FROM orders  ORDER BY total_amt_usd DESC LIMIT 1
+------------ Aggregate Way------------------------
+-- select  O.account_id, MAX(total_amt_usd) "Total Amnt" from orders O 
+-- Group BY O.account_id
+-- ORDER BY "Total Amnt" DESC LIMIT 1
+
+------------------------ understanding COUNT-------------------
+--SELECT COUNT(*) FROM orders o where o.account_id=1001
+--select * from orders o where o.account_id=1001
+
+
+

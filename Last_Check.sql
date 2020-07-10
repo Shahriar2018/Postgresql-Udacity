@@ -1,0 +1,25 @@
+-------------------FIRST QUESTION----------------------------
+-- SELECT r.name   "Region", s.name  "Sales Rep",
+-- a.id "Account"
+-- FROM sales_reps s
+-- JOIN region r
+-- ON s.region_id=r.id
+-- JOIN accounts a
+-- ON a.sales_rep_id=s.id
+-- WHERE r.name='Midwest'
+-- ORDER BY a.name
+------------------------------ Question 2-------------------
+-- SELECT r.name "Region",s.name "Sales Rep",a.name "Account Holder"
+-- FROM accounts a
+-- JOIN sales_reps s ON a.sales_rep_id=s.id
+-- JOIN region r ON r.id=s.region_id
+-- WHERE r.name='Midwest' AND s.name LIKE 'S%'
+-- ORDER BY a.name
+-----------------------Question 3-----------------
+-- SELECT r.name "Region",s.name "Sales Rep Name",a.name "Account Name"
+-- FROM accounts a
+-- JOIN sales_reps s ON a.sales_rep_id=s.id
+-- JOIN region r ON r.id=s.region_id
+-- WHERE r.name='Midwest' AND s.name LIKE '% K%'
+-- ORDER BY a.name
+------------------Question 4------------------------

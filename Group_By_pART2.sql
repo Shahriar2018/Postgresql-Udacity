@@ -1,0 +1,141 @@
+-- SELECT account_id,
+--        channel,
+-- 	   COUNT(id) As events
+-- FROM web_events
+-- --WHERE account_id=1001
+-- GROUP BY account_id,channel
+-- ORDER BY account_id,channel
+---------------------------------------------------------------
+--SELECT * FROM web_events
+---------------Q.2------------------------
+-- SELECT a.name "Account Names",AVG(o.standard_qty) standard,AVG(o.poster_qty) poster,AVG(o.gloss_qty) gloss
+-- FROM accounts a 
+-- JOIN orders o ON a.id=o.account_id
+-- GROUP BY a.name
+--------------------------PRACTICE--------------------------------------
+--SELECT DISTINCT COUNT(a.name) FROM accounts a
+--SELECT DISTINCT a.name FROM accounts a WHERE a.name IS NOT NULL 
+---------------Q.3-------------------
+-- SELECT s.name,w.channel,COUNT(w.occurred_at) MOST
+-- FROM web_events w 
+-- JOIN accounts a ON w.account_id=a.id
+-- JOIN sales_reps s ON s.id=a.sales_rep_id
+-- GROUP BY s.name,w.channel
+-- ORDER BY MOST DESC
+----------------------------------------------------------
+-- SELECT COUNT(*) mymy FROM (SELECT account_id,
+--        SUM(total_amt_usd) AS sum_total_amt_usd
+-- 	   FROM orders
+-- 	   GROUP BY 1
+-- 	   HAVING SUM(total_amt_usd)>=27000
+--        ORDER BY 2 DESC) toto
+------------------------------------
+
+-- SELECT account_id,
+--        SUM(total_amt_usd) AS sum_total_amt_usd
+-- 	   FROM orders
+-- 	   GROUP BY 1
+-- 	   HAVING SUM(total_amt_usd)>=27000
+--        ORDER BY 2 DESC
+-----------------------------HAVING--Quiz.1-----------------
+--How many of the sales reps have more than 5 accounts that they manage?
+-- SELECT COUNT(*) FROM (SELECT s.id, s.name, COUNT(*) num_accounts
+-- FROM accounts a
+-- JOIN sales_reps s
+-- ON s.id = a.sales_rep_id
+-- GROUP BY s.id, s.name
+-- HAVING COUNT(*) > 5
+-- ORDER BY num_accounts) 
+--------------------HAVING Quiz.2----------------------
+--How many accounts have more than 20 orders?
+
+-- SELECT COUNT(*) FROM (SELECT a.id,o.account_id, COUNT(*) total_orders 
+-- FROM orders o
+-- JOIN accounts  a 
+-- ON a.id=o.account_id -- Count is counting how many times they were equaled
+-- GROUP BY a.id,o.account_id 
+-- HAVING COUNT(*)>20
+-- ORDER BY a.id) Ny
+----------------------------------
+-- SELECT COUNT(*) FROM (SELECT a.id, a.name, COUNT(*) num_orders
+-- FROM accounts a
+-- JOIN orders o
+-- ON a.id = o.account_id
+-- GROUP BY a.id, a.name
+-- HAVING COUNT(*) > 20
+-- ORDER BY num_orders) YU
+----------------------- Practice-------
+--SELECT COUNT(*) FROM (SELECT id,account_id FROM orders o where o.account_id=1001) NY
+-------------------------q.3-------
+-- Which account has the most orders?
+-- SELECT a.id, a.name, COUNT(*) num_orders
+-- FROM accounts a
+-- JOIN orders o
+-- ON a.id = o.account_id
+-- GROUP BY a.id, a.name
+-- ORDER BY num_orders DESC
+-- LIMIT 1;
+-----------------------Q.4-----------------
+--How many accounts spent more than 30,000 usd total across all orders?
+
+-- SELECT a.id, a.name, COUNT(*) total
+-- FROM accounts a
+-- JOIN orders o
+-- ON a.id = o.account_id
+-- GROUP BY a.id, a.name
+-- HAVING SUM(o.total_amt_usd) > 30000
+-- --ORDER BY total_spent;
+-------------------understading difference count vs sum------------------
+
+-- SELECT a.id, a.name, COUNT(*) total,SUM(o.total_amt_usd) total_spent
+-- FROM accounts a
+-- JOIN orders o
+-- ON a.id = o.account_id
+-- GROUP BY a.id, a.name
+-- HAVING SUM(o.total_amt_usd) > 30000 --o.standard_amt_usd,o.gloss_amt_usd,o.poster_amt_usd,
+-- ORDER BY a.name;
+-------------------
+-- SELECT COUNT(*) FROM (select a.name,SUM(o.total_amt_usd)--COUNT(*)
+-- from orders o 
+-- JOIN accounts a
+-- ON a.id=o.account_id
+-- --where a.name='Walmart'
+-- GROUP BY a.name
+-- HAVING SUM(o.total_amt_usd)>30000) r1
+-----------------------Q.9--------------------
+--Which accounts used facebook as a channel to contact customers more than 6 times?
+-- SELECT a.id, a.name, w.channel, COUNT(*) use_of_channel
+-- FROM accounts a
+-- JOIN web_events w
+-- ON a.id = w.account_id
+-- GROUP BY a.id, a.name, w.channel
+-- HAVING COUNT(*) > 6 AND w.channel = 'facebook'
+-- ORDER BY use_of_channel;
+--------------------Q.10--------------
+--Which channel was most frequently used by most accounts?
+-- SELECT a.id, a.name, w.channel, COUNT(*) use_of_channel
+-- FROM accounts a
+-- JOIN web_events w
+-- ON a.id = w.account_id
+-- GROUP BY a.id, a.name, w.channel
+-- ORDER BY use_of_channel DESC
+-- LIMIT 20;
+--------------CASE STATEMENTS----------
+-- SELECT id,
+--        account_id,
+-- 	   occurred_at,
+-- 	   channel,
+-- 	   CASE WHEN channel='adwords' THEN 'yes' END AS is_facebook
+-- 	FROM web_events
+-- 	ORDER BY occurred_at
+----------------shows Error: Division by zero------------------------------
+-- SELECT id, account_id, standard_amt_usd/standard_qty AS unit_price
+-- FROM orders
+-------------------------- Using Case to Avoid this error---------
+SELECT account_id, CASE WHEN standard_qty = 0 OR standard_qty IS NULL THEN 0
+                        ELSE standard_amt_usd/standard_qty END AS unit_price
+FROM orders
+
+
+
+
